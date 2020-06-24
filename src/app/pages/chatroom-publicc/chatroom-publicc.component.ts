@@ -39,11 +39,6 @@ export class ChatroomPubliccComponent implements OnInit {
         this.isDisconnected = false;
         this.chat = this.ws.subscribe('chat');
         this.joinRoomUser(sessionStorage.getItem('username'));
-        this.chat.on('newUser', (data: any) => {
-          if (data !== null || data !== '' || data.length !== 0){
-            this.users = data;
-          }
-        });
         this.chat.on('message', (data: any) => {
           this.messages.push(data);
         });
@@ -62,6 +57,11 @@ export class ChatroomPubliccComponent implements OnInit {
   }
 
   async joinRoomUser(user) {
+    this.chat.on('newUser', (data: any) => {
+      if (data !== null || data !== '' || data.length !== 0){
+        this.users = data;
+      }
+    });
     this.chat.emit('newUser', user);
     this.user = user;
   }
