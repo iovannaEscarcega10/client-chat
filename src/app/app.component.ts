@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Ws from '@adonisjs/websocket-client';
+//import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +10,5 @@ import Ws from '@adonisjs/websocket-client';
 })
 export class AppComponent {
   title = 'client-chat';
+
 }
