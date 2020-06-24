@@ -16,13 +16,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
-//import { MatInputHarness } from '@angular/material/input/testing';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { ChatroomPubliccComponent } from './pages/chatroom-publicc/chatroom-publicc.component';
+import { LoginComponent } from './pages/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ChatroomPubliccComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatGridListModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
