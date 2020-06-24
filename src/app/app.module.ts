@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,18 +17,23 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { ChatComponent } from './chat/chat/chat.component';
 import { ChatroomPubliccComponent } from './pages/chatroom-publicc/chatroom-publicc.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
-
+//import { HttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
+    ChatComponent,
     ChatroomPubliccComponent,
     LoginComponent
   ],
   imports: [
     BrowserModule,
+    //HttpClientModule,
+    //HttpClient,
+    FormsModule,
     AppRoutingModule,
     MatSliderModule,
     BrowserAnimationsModule,
@@ -46,6 +50,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatButtonToggleModule,
     MatSelectModule,
+    //HttpModule
     FormsModule
   ],
   providers: [],
