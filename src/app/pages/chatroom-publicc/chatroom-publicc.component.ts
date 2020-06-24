@@ -29,48 +29,41 @@ export class ChatroomPubliccComponent implements OnInit {
     this.ws = await Ws('ws://127.0.0.1:3333');
     this.ws.connect();
 
-    let isConnected = false;
-    let isDisconnected = false;
+    this.chat = this.ws.subscribe('chat');
+
+    this.chat.on('message', (data: any) => {
+      this.messages.push(data);
+    });
 
     this.ws.on('open', () => {
-      isConnected = true;
-      if (isConnected) {
-        this.isConnected = true;
-        this.isDisconnected = false;
-        this.chat = this.ws.subscribe('chat');
+      console.log('connect');
+      this.isConnected = true;
+      if (this.isConnected) {
         this.joinRoomUser(sessionStorage.getItem('username'));
-        this.chat.on('message', (data: any) => {
-          this.messages.push(data);
+        this.chat.on('newUser', (data: any) => {
+          if (data !== null || data !== '' || data.length !== 0){
+            this.users = data;
+          }
         });
       }
     });
 
     this.ws.on('close', () => {
-      isDisconnected = true;
-      if (isDisconnected) {
-        console.log('HUBO UN PROBLEMA PRUEBE REFRESCANNDO LA PÁGINA');
-        this.chat.emit('leaveRoomUser', this.user);
         this.isDisconnected = true;
-      }
-      console.log('Ups! Hubo algún problema, pruebe refrescando el navegador');
+        if (this.isDisconnected) {
+          console.log('HUBO UN PROBLEMA PRUEBE REFRESCANNDO LA PÁGINA');
+        }
     });
   }
 
   async joinRoomUser(user) {
-    this.chat.on('newUser', (data: any) => {
-      if (data !== null || data !== '' || data.length !== 0){
-        this.users = data;
-      }
-    });
     this.chat.emit('newUser', user);
     this.user = user;
   }
 
   async sendMessage() {
-    console.log('SEND MESSAGE');
     this.chat.emit('message', this.msg);
     this.messages.push(this.msg);
     this.msg = '';
   }
-
 }
