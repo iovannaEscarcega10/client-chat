@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Ws from '@adonisjs/websocket-client';
 /*import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';*/
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',

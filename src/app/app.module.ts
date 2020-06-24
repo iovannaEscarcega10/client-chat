@@ -21,11 +21,11 @@ import { ChatComponent } from './chat/chat/chat.component';
 import { ChatroomPubliccComponent } from './pages/chatroom-publicc/chatroom-publicc.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
-
+//import { HttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    ChatComponent
+    ChatComponent,
     ChatroomPubliccComponent,
     LoginComponent
   ],
@@ -50,11 +50,8 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatButtonToggleModule,
     MatSelectModule,
-<<<<<<< HEAD
     //HttpModule
-=======
     FormsModule
->>>>>>> 7dc595dac2fb028fb6008cfbe24794e24213de9b
   ],
   providers: [],
   bootstrap: [AppComponent]

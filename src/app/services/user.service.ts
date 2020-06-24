@@ -14,7 +14,6 @@ export class UserService {
   login(user: any): Observable<any> {
     return this.request('post', 'login', user)
   }
-
   logout() {
     this.cookies.delete('token')
     this.request('get', 'logout')
