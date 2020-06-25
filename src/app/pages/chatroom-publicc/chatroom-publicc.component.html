@@ -1,33 +1,32 @@
 <section class="chat-room">
     <h5>Chat - Room!</h5>
-    <div *ngIf="isConnected === true" class="isConnected">
-        <h4>Bienvenido {{ user }}</h4>
+    <div class="isConnected">
+        <h4>Bienvenido</h4>
     </div>
-    <div *ngIf="isDisconnected === true" class="isConnected">
+    <div class="isConnected">
         <h4>Ups! Algo salió mal, intente más tarde</h4>
     </div>
     <div class="container-chat">
         <div class="container-users">
             <h5>Usuarios conectados</h5>
-            <div class="container-users-log" *ngIf="users">
-                <div class="container-image-user" *ngFor="let usu of users">
-                    <!-- <div class="image-chat"></div> -->
-                    <p class="users" > {{usu}} </p>
+            <div class="container-users-log">
+                <div class="container-image-user">
+                    <p class="users" > </p>
                 </div>
             </div>
         </div>
         <div class="container-text-chat">
             <div class="container-text">
-                <div *ngFor="let message of messages">
-                    <div class="container-image-text">
-                        <div class="image-chat"></div>
-                        <div>
-                            <button id="txt-chat" mat-raised-button color="" class="txt-chat">
-                                <p class="txt">  {{ message }}</p>
-                            </button>
-                        </div>
+                    <div id="messages-container" *ngFor="let message of messages">
+                        <div class="container-image-text">
+                            <div class="image-chat"></div>
+                            <div>
+                                <button id="txt-chat" mat-raised-button color="" class="txt-chat">
+                                    <p class="txt">{{message.username}}: {{message.text}} </p>
+                                </button>
+                            </div>
+                        <br>
                     </div>
-                    <br>
                 </div>
                 
             </div>
@@ -37,8 +36,8 @@
             <mat-form-field class="input-chat">
                 <mat-label>¿En qué piensas?</mat-label>
                 <input 
-                    [(ngModel)]="msg" 
-                    matInput 
+                    matInput
+                    [(ngModel)]="msg"
                     placeholder="Escribe algo :D"
                     maxlength="150">
             </mat-form-field>

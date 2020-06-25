@@ -1,5 +1,7 @@
 import { Component, OnInit  } from '@angular/core';
 import Ws from '@adonisjs/websocket-client';
+import { HttpClient } from '@angular/common/http';
+import {Message} from './messages';
 
 @Component({
   selector: 'app-chatroom-publicc',
@@ -9,21 +11,21 @@ import Ws from '@adonisjs/websocket-client';
 export class ChatroomPubliccComponent implements OnInit {
   ws: any;
   chat: any;
-  messages: any = [];
   msg: string;
-  // Conexiones chat
-  isConnected: boolean;
-  isDisconnected: boolean;
 
-  // Variables para los usuarios
-  users: string[] = [];
-  user: string;
-  username: any[] = [];
+  messages: Message[];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.connectToChat();
+    this.httpmethod();
+  }
+
+  async httpmethod() {
+    this.http.get('http://127.0.0.1:3333/api/messages/50').subscribe((result: any) => {
+      this.messages = result;
+    });
   }
 
   async connectToChat(){
@@ -31,43 +33,17 @@ export class ChatroomPubliccComponent implements OnInit {
     this.ws.connect();
 
     this.chat = this.ws.subscribe('chat');
-
     this.chat.on('message', (data: any) => {
       this.messages.push(data);
     });
-
-    this.ws.on('open', () => {
-      console.log('connect');
-      this.isConnected = true;
-      if (this.isConnected) {
-        const username = JSON.parse(sessionStorage.getItem('username')).username;
-        this.joinRoomUser(username);
-        this.chat.on('newUser', (data: any) => {
-          if (data !== null || data !== '' || data.length !== 0){
-            this.users = data;
-          }
-        });
-      }
-    });
-
-    this.ws.on('close', () => {
-        this.isDisconnected = true;
-        if (this.isDisconnected) {
-          console.log('HUBO UN PROBLEMA PRUEBE REFRESCANNDO LA PÁGINA');
-        }
-    });
-  }
-
-  async joinRoomUser(user) {
-    this.chat.emit('newUser', user);
-    this.user = user;
   }
 
   async sendMessage() {
-    this.chat.emit('showdata', this.user);
-    this.chat.emit('message', this.msg);
-
-    this.messages.push(this.msg);
-    this.msg = '';
+    const idx = JSON.parse(sessionStorage.getItem('username')).id;
+    const datos = {
+      sender_id: idx,
+      text: this.msg
+    };
+    this.chat.emit('message', datos);
   }
 }

@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
       password: this.password
     };
     this.http.post('http://127.0.0.1:3333/api/login', data).subscribe((result: any) => {
+      console.log(result);
       sessionStorage.setItem('username', JSON.stringify(result));
       this.router.navigate(['chatroom-public']);
     });
