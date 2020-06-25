@@ -18,8 +18,7 @@ export class ChatroomPubliccComponent implements OnInit {
   // Variables para los usuarios
   users: string[] = [];
   user: string;
-  username: string[] = [];
-  datos: string[] = [];
+  username: any[] = [];
 
   constructor() { }
 
@@ -34,15 +33,7 @@ export class ChatroomPubliccComponent implements OnInit {
     this.chat = this.ws.subscribe('chat');
 
     this.chat.on('message', (data: any) => {
-      this.messages.push(data.text);
-      this.username = data[this.username.length].username;
-      this.datos.push(data);
-      // this.username.push(data.username);
-      // this.showusername = data[this.username.length - 1];
-      console.log('mensajes pruebon: ' + data);
-      console.log(data);
-      console.log(data.length - 1);
-      console.log(data[this.username.length].username);
+      this.messages.push(data);
     });
 
     this.ws.on('open', () => {
@@ -73,16 +64,9 @@ export class ChatroomPubliccComponent implements OnInit {
   }
 
   async sendMessage() {
-    const id = JSON.parse(sessionStorage.getItem('username')).id;
-    const user = JSON.parse(sessionStorage.getItem('username')).username;
-    const data = {
-      username: user,
-      text: this.msg,
-      sender_id: id
-    };
-    this.chat.emit('message', data);
-    console.log(data);
-    // this.username = data.username;
+    this.chat.emit('showdata', this.user);
+    this.chat.emit('message', this.msg);
+
     this.messages.push(this.msg);
     this.msg = '';
   }
