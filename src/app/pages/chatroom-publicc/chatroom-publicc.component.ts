@@ -9,7 +9,7 @@ import Ws from '@adonisjs/websocket-client';
 export class ChatroomPubliccComponent implements OnInit {
   ws: any;
   chat: any;
-  messages: string[] = [];
+  messages: any = [];
   msg: string;
   // Conexiones chat
   isConnected: boolean;
@@ -18,6 +18,8 @@ export class ChatroomPubliccComponent implements OnInit {
   // Variables para los usuarios
   users: string[] = [];
   user: string;
+  username: string[] = [];
+  datos: string[] = [];
 
   constructor() { }
 
@@ -32,14 +34,23 @@ export class ChatroomPubliccComponent implements OnInit {
     this.chat = this.ws.subscribe('chat');
 
     this.chat.on('message', (data: any) => {
-      this.messages.push(data);
+      this.messages.push(data.text);
+      this.username = data[this.username.length].username;
+      this.datos.push(data);
+      // this.username.push(data.username);
+      // this.showusername = data[this.username.length - 1];
+      console.log('mensajes pruebon: ' + data);
+      console.log(data);
+      console.log(data.length - 1);
+      console.log(data[this.username.length].username);
     });
 
     this.ws.on('open', () => {
       console.log('connect');
       this.isConnected = true;
       if (this.isConnected) {
-        this.joinRoomUser(sessionStorage.getItem('username'));
+        const username = JSON.parse(sessionStorage.getItem('username')).username;
+        this.joinRoomUser(username);
         this.chat.on('newUser', (data: any) => {
           if (data !== null || data !== '' || data.length !== 0){
             this.users = data;
@@ -62,7 +73,16 @@ export class ChatroomPubliccComponent implements OnInit {
   }
 
   async sendMessage() {
-    this.chat.emit('message', this.msg);
+    const id = JSON.parse(sessionStorage.getItem('username')).id;
+    const user = JSON.parse(sessionStorage.getItem('username')).username;
+    const data = {
+      username: user,
+      text: this.msg,
+      sender_id: id
+    };
+    this.chat.emit('message', data);
+    console.log(data);
+    // this.username = data.username;
     this.messages.push(this.msg);
     this.msg = '';
   }

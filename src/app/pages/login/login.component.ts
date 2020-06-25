@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -19,7 +20,9 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     };
-    sessionStorage.setItem('username', data.email);
-    this.router.navigate(['chatroom-public']);
+    this.http.post('http://127.0.0.1:3333/api/login', data).subscribe((result: any) => {
+      sessionStorage.setItem('username', JSON.stringify(result));
+      this.router.navigate(['chatroom-public']);
+    });
   }
 }

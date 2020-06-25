@@ -21,9 +21,12 @@
                 <div *ngFor="let message of messages">
                     <div class="container-image-text">
                         <div class="image-chat"></div>
-                        <button id="txt-chat" mat-raised-button color="" class="txt-chat">
-                            <p class="txt">{{ message }}</p>
-                        </button>
+                        <div *ngFor="let dato of datos">
+                            <button id="txt-chat" mat-raised-button color="" class="txt-chat">
+                                <!-- <p class="txt">{{ message }}</p> -->
+                                <p class="txt">{{dato.username}} {{dato.text}}</p> 
+                            </button>
+                        </div>
                     </div>
                     <br>
                 </div>
